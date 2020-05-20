@@ -17,7 +17,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         myName = "Anushka Saxena"
-        myLabel.text = myName
+        var myNumber: Int = 456
+        myNumber += 1
+        myLabel.text = "\(myNumber)"
     }
 
 
