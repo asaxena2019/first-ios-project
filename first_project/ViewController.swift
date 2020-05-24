@@ -15,7 +15,7 @@ enum modes {
 }
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var myLabel: UILabel!
     
     override func viewDidLoad() {
