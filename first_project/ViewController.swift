@@ -21,14 +21,17 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.s
-    }
-   
-    @IBAction func showSum(_ sender: Any) {
-        addNumbers(num1: 2, num2: 3)
-    }
-    
-    func addNumbers(num1: Int, num2: Int){
-        myLabel.text = "Sum is \(num1+num2)"
+        let mode: modes = .notSet
+        let num1: Int = 5
+        let num2: Int = 4
+        var total: Int = 0
+        if mode == .addition {
+            total = num1 + num2
+        }
+        else if mode == .subtraction{
+            total = num1 - num2
+        }
+        myLabel.text = "Total is \(total)"
     }
 
 
