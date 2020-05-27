@@ -8,19 +8,107 @@
 
 import UIKit
 
+enum modes {
+    case notSet
+    case addition
+    case subtraction
+    case multiplication
+}
+
 class ViewController: UIViewController {
     
+    @IBOutlet weak var label: UILabel!
     
-    @IBOutlet weak var tnum1: UITextField!
-    @IBOutlet weak var tnum2: UITextField!
-    @IBOutlet weak var sum: UILabel!
-    
-    @IBAction func doMath(_ sender: Any){
-        guard let t1: String = tnum1.text, let num1: Int = Int(t1), let t2: String = tnum2.text, let num2: Int = Int(t2) else {
-            sum.text = "fail"
+    var labelString: String = "0"
+    var currentMode: modes = .notSet
+    var savedNum: Int = 0
+    var lastButtonWasMode: Bool = false
+   
+    func updateText(){
+        guard let labelInt: Int = Int(labelString) else {
+            label.text = "Error"
             return
         }
-        sum.text = "\(num1 + num2)"
+        
+        if currentMode == .notSet {
+            savedNum = labelInt
+        }
+        
+        let formatter: NumberFormatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        let num: NSNumber = NSNumber(value: labelInt)
+        
+        label.text = formatter.string(from: num)
+    
+    }
+    
+    func changeModes(newMode: modes){
+        if savedNum == 0 {
+            return
+        }
+        
+        currentMode = newMode
+        lastButtonWasMode = true
+        
+    }
+  
+    @IBAction func didPressPlus(_ sender: Any) {
+        changeModes(newMode: .addition)
+    }
+    
+    @IBAction func didPressMinus(_ sender: Any) {
+        changeModes(newMode: .subtraction)
+    }
+    
+    @IBAction func didPressMult(_ sender: Any) {
+        changeModes(newMode: .multiplication)
+    }
+    
+    @IBAction func didPressEqual(_ sender: Any) {
+        guard let labelInt: Int = Int(labelString) else {
+            label.text = "Error"
+            return
+        }
+        if currentMode == .notSet || lastButtonWasMode {
+            return
+        }
+        
+        if currentMode == .addition {
+            savedNum += labelInt
+        } else if currentMode == .subtraction {
+            savedNum -= labelInt
+        } else if currentMode == .multiplication {
+            savedNum *= labelInt
+        }
+        
+        currentMode = .notSet
+        labelString = "\(savedNum)"
+        updateText()
+        lastButtonWasMode = true
+        
+    }
+    
+    @IBAction func didPressClear(_ sender: Any) {
+        labelString = "0"
+        currentMode = .notSet
+        savedNum = 0
+        lastButtonWasMode = false
+        label.text = "0"
+    }
+    
+    @IBAction func didPressNumber(_ sender: UIButton) {
+        guard let stringValue: String = sender.titleLabel?.text else {
+            label.text = "Error"
+            return
+        }
+        
+        if lastButtonWasMode {
+            lastButtonWasMode = false
+            labelString = "0"
+        }
+        
+        labelString = labelString.appending(stringValue)
+        updateText()
     }
     
 }
