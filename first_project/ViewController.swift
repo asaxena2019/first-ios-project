@@ -10,16 +10,15 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    var isOn: Bool = true
     
-    @IBAction func toggleLights(_ sender:Any){
-        if isOn == true {
-            isOn = false
-            view.backgroundColor = .darkGray
-        }
-        else {
-            isOn = true
-            view.backgroundColor = .white
-        }
+    @IBOutlet weak var tnum1: UITextField!
+    @IBOutlet weak var tnum2: UITextField!
+    @IBOutlet weak var sum: UILabel!
+    
+    @IBAction func doMath(_ sender: Any){
+        let num1: Int = Int(tnum1.text!)!
+        let num2: Int = Int(tnum2.text!)!
+        sum.text = "\(num1 + num2)"
     }
+    
 }
