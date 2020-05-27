@@ -8,28 +8,19 @@
 
 import UIKit
 
-enum modes {
-    case notSet
-    case addition
-    case subtraction
-}
-
 class ViewController: UIViewController {
     
-    @IBOutlet weak var myLabel: UILabel!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.s
-    }
-   
-    @IBAction func showSum(_ sender: Any) {
-        addNumbers(num1: 2, num2: 3)
+    @IBOutlet weak var tnum1: UITextField!
+    @IBOutlet weak var tnum2: UITextField!
+    @IBOutlet weak var sum: UILabel!
+    
+    @IBAction func doMath(_ sender: Any){
+        guard let t1: String = tnum1.text, let num1: Int = Int(t1), let t2: String = tnum2.text, let num2: Int = Int(t2) else {
+            sum.text = "fail"
+            return
+        }
+        sum.text = "\(num1 + num2)"
     }
     
-    func addNumbers(num1: Int, num2: Int){
-        myLabel.text = "Sum is \(num1+num2)"
-    }
-
-
 }
