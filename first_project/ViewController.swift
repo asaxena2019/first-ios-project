@@ -16,8 +16,10 @@ class ViewController: UIViewController {
     @IBOutlet weak var sum: UILabel!
     
     @IBAction func doMath(_ sender: Any){
-        let num1: Int = Int(tnum1.text!)!
-        let num2: Int = Int(tnum2.text!)!
+        guard let t1: String = tnum1.text, let num1: Int = Int(t1), let t2: String = tnum2.text, let num2: Int = Int(t2) else {
+            sum.text = "fail"
+            return
+        }
         sum.text = "\(num1 + num2)"
     }
     
